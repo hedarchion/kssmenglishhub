@@ -13,6 +13,18 @@ interface BrowseComparisonViewProps {
   formsData: FormData[];
 }
 
+// Minimal accent color coding - borders/backgrounds only, never font colors
+const skillColors: Record<string, { border: string; bg: string; icon: string }> = {
+  'Listening': { border: 'border-yellow-400', bg: 'bg-yellow-50/50', icon: 'text-yellow-600' },
+  'Speaking': { border: 'border-red-400', bg: 'bg-red-50/50', icon: 'text-red-600' },
+  'Reading': { border: 'border-green-400', bg: 'bg-green-50/50', icon: 'text-green-600' },
+  'Writing': { border: 'border-blue-400', bg: 'bg-blue-50/50', icon: 'text-blue-600' },
+  'Literature in Action': { border: 'border-purple-400', bg: 'bg-purple-50/50', icon: 'text-purple-600' },
+  'Grammar': { border: 'border-amber-700', bg: 'bg-amber-50/50', icon: 'text-amber-700' },
+  'Vocabulary': { border: 'border-teal-500', bg: 'bg-teal-50/50', icon: 'text-teal-600' },
+  'Texts': { border: 'border-orange-500', bg: 'bg-orange-50/50', icon: 'text-orange-600' },
+};
+
 const skillIcons: Record<string, React.ReactNode> = {
   'Listening': <Headphones className="h-4 w-4" />,
   'Speaking': <Mic className="h-4 w-4" />,
@@ -61,13 +73,15 @@ export function BrowseComparisonView({ formsData }: BrowseComparisonViewProps) {
     return 'grid-cols-1';
   };
 
-  const renderGrammarComparison = () => (
+  const renderGrammarComparison = () => {
+    const colors = skillColors['Grammar'];
+    return (
     <div className={`grid ${getGridClasses()} gap-3`}>
       {formsData.map((form) => (
-        <Card key={form.form} className="border-l-2 border-l-primary">
-          <CardHeader className="py-2 px-3 bg-muted/30 flex flex-row items-center justify-between">
+        <Card key={form.form} className={`border-l-2 ${colors.border}`}>
+          <CardHeader className={`py-2 px-3 ${colors.bg} flex flex-row items-center justify-between`}>
             <CardTitle className="text-xs flex items-center gap-1.5">
-              <GraduationCap className="h-3.5 w-3.5" />
+              <GraduationCap className={`h-3.5 w-3.5 ${colors.icon}`} />
               Form {form.form}
             </CardTitle>
             <div className="flex items-center gap-1">
@@ -91,15 +105,18 @@ export function BrowseComparisonView({ formsData }: BrowseComparisonViewProps) {
         </Card>
       ))}
     </div>
-  );
+    );
+  };
 
-  const renderVocabularyComparison = () => (
+  const renderVocabularyComparison = () => {
+    const colors = skillColors['Vocabulary'];
+    return (
     <div className={`grid ${getGridClasses()} gap-3`}>
       {formsData.map((form) => (
-        <Card key={form.form} className="border-l-2 border-l-primary">
-          <CardHeader className="py-2 px-3 bg-muted/30 flex flex-row items-center justify-between">
+        <Card key={form.form} className={`border-l-2 ${colors.border}`}>
+          <CardHeader className={`py-2 px-3 ${colors.bg} flex flex-row items-center justify-between`}>
             <CardTitle className="text-xs flex items-center gap-1.5">
-              <GraduationCap className="h-3.5 w-3.5" />
+              <GraduationCap className={`h-3.5 w-3.5 ${colors.icon}`} />
               Form {form.form}
             </CardTitle>
             <div className="flex items-center gap-1">
@@ -112,7 +129,7 @@ export function BrowseComparisonView({ formsData }: BrowseComparisonViewProps) {
               <div className="p-2 space-y-2">
                 {Object.entries(form.vocabulary).map(([category, words]) => (
                   <div key={category} className="border rounded overflow-hidden">
-                    <div className="bg-muted/30 px-2 py-1 flex items-center justify-between">
+                    <div className={`${colors.bg} px-2 py-1 flex items-center justify-between`}>
                       <span className="text-xs font-medium">{category}</span>
                       <div className="flex gap-0.5">
                         <CopyButton text={words.join(', ')} className="h-5 w-5" />
@@ -136,15 +153,16 @@ export function BrowseComparisonView({ formsData }: BrowseComparisonViewProps) {
         </Card>
       ))}
     </div>
-  );
+    );
+  };
 
   const renderStandardsComparison = () => (
     <div className={`grid ${getGridClasses()} gap-3`}>
       {formsData.map((form) => (
-        <Card key={form.form} className="border-l-2 border-l-primary">
-          <CardHeader className="py-2 px-3 bg-muted/30 flex flex-row items-center justify-between">
+        <Card key={form.form} className="border-l-2 border-l-gray-400">
+          <CardHeader className="py-2 px-3 bg-gray-50/50 flex flex-row items-center justify-between">
             <CardTitle className="text-xs flex items-center gap-1.5">
-              <GraduationCap className="h-3.5 w-3.5" />
+              <GraduationCap className="h-3.5 w-3.5 text-gray-600" />
               Form {form.form}
             </CardTitle>
             <div className="flex items-center gap-1">
@@ -195,13 +213,15 @@ export function BrowseComparisonView({ formsData }: BrowseComparisonViewProps) {
     </div>
   );
 
-  const renderTextTypesComparison = () => (
+  const renderTextTypesComparison = () => {
+    const colors = skillColors['Texts'];
+    return (
     <div className={`grid ${getGridClasses()} gap-3`}>
       {formsData.map((form) => (
-        <Card key={form.form} className="border-l-2 border-l-primary">
-          <CardHeader className="py-2 px-3 bg-muted/30 flex flex-row items-center justify-between">
+        <Card key={form.form} className={`border-l-2 ${colors.border}`}>
+          <CardHeader className={`py-2 px-3 ${colors.bg} flex flex-row items-center justify-between`}>
             <CardTitle className="text-xs flex items-center gap-1.5">
-              <GraduationCap className="h-3.5 w-3.5" />
+              <GraduationCap className={`h-3.5 w-3.5 ${colors.icon}`} />
               Form {form.form}
             </CardTitle>
             <div className="flex items-center gap-1">
@@ -224,7 +244,8 @@ export function BrowseComparisonView({ formsData }: BrowseComparisonViewProps) {
         </Card>
       ))}
     </div>
-  );
+    );
+  };
 
   return (
     <Card className="border">
@@ -238,22 +259,22 @@ export function BrowseComparisonView({ formsData }: BrowseComparisonViewProps) {
       </CardHeader>
       <CardContent className="p-3 pt-0">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid grid-cols-4 h-8 p-0.5 mb-3">
-            <TabsTrigger value="grammar" className="text-xs gap-1">
-              <Languages className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Grammar</span>
+          <TabsList className="grid grid-cols-2 sm:grid-cols-4 h-auto min-h-[2.5rem] p-1 gap-1 mb-3">
+            <TabsTrigger value="grammar" className="text-xs gap-1.5 py-2">
+              <Languages className="h-4 w-4" />
+              <span>Grammar</span>
             </TabsTrigger>
-            <TabsTrigger value="vocabulary" className="text-xs gap-1">
-              <Library className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Vocab</span>
+            <TabsTrigger value="vocabulary" className="text-xs gap-1.5 py-2">
+              <Library className="h-4 w-4" />
+              <span>Vocab</span>
             </TabsTrigger>
-            <TabsTrigger value="standards" className="text-xs gap-1">
-              <BookOpen className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Standards</span>
+            <TabsTrigger value="standards" className="text-xs gap-1.5 py-2">
+              <BookOpen className="h-4 w-4" />
+              <span>Standards</span>
             </TabsTrigger>
-            <TabsTrigger value="texttypes" className="text-xs gap-1">
-              <FileText className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Texts</span>
+            <TabsTrigger value="texttypes" className="text-xs gap-1.5 py-2">
+              <FileText className="h-4 w-4" />
+              <span>Texts</span>
             </TabsTrigger>
           </TabsList>
 

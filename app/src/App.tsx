@@ -306,7 +306,7 @@ function App() {
             <div className="text-xs">Kementerian Pendidikan Malaysia</div>
           </div>
           <div className="mt-3 pt-3 border-t text-center text-xs text-muted-foreground">
-            Made by <a href="https://github.com/hedarchion" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Ashrofu</a> using KIMI-K2 2.5
+            Made by Ashrofu | Built using Kimi-K2.5
           </div>
         </div>
       </footer>

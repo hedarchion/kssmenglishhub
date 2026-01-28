@@ -23,40 +23,6 @@ interface SkillTabsProps {
   formData: FormData;
 }
 
-// Pastel color coding for skills
-const skillColors: Record<string, { bg: string; border: string; icon: string; header: string }> = {
-  'Listening': { 
-    bg: 'bg-yellow-50 dark:bg-yellow-950/20', 
-    border: 'border-yellow-200 dark:border-yellow-800',
-    icon: 'text-yellow-600',
-    header: 'bg-yellow-100/50 dark:bg-yellow-900/20'
-  },
-  'Speaking': { 
-    bg: 'bg-red-50 dark:bg-red-950/20', 
-    border: 'border-red-200 dark:border-red-800',
-    icon: 'text-red-600',
-    header: 'bg-red-100/50 dark:bg-red-900/20'
-  },
-  'Reading': { 
-    bg: 'bg-green-50 dark:bg-green-950/20', 
-    border: 'border-green-200 dark:border-green-800',
-    icon: 'text-green-600',
-    header: 'bg-green-100/50 dark:bg-green-900/20'
-  },
-  'Writing': { 
-    bg: 'bg-blue-50 dark:bg-blue-950/20', 
-    border: 'border-blue-200 dark:border-blue-800',
-    icon: 'text-blue-600',
-    header: 'bg-blue-100/50 dark:bg-blue-900/20'
-  },
-  'Literature in Action': { 
-    bg: 'bg-purple-50 dark:bg-purple-950/20', 
-    border: 'border-purple-200 dark:border-purple-800',
-    icon: 'text-purple-600',
-    header: 'bg-purple-100/50 dark:bg-purple-900/20'
-  },
-};
-
 const skillIcons: Record<string, React.ReactNode> = {
   'Listening': <Headphones className="h-4 w-4" />,
   'Speaking': <Mic className="h-4 w-4" />,
@@ -65,21 +31,20 @@ const skillIcons: Record<string, React.ReactNode> = {
   'Literature in Action': <Drama className="h-4 w-4" />,
 };
 
-function LearningStandardsList({ standards, skillName }: { standards: { code: string; description: string }[]; skillName: string }) {
+function LearningStandardsList({ standards }: { standards: { code: string; description: string }[] }) {
   const [expanded, setExpanded] = useState(true);
-  const colors = skillColors[skillName] || skillColors['Listening'];
 
   return (
-    <div className={`mt-2 border rounded-lg ${colors.border} overflow-hidden`}>
+    <div className="mt-2 border rounded-lg border-gray-200 dark:border-gray-700 overflow-hidden">
       <button 
         onClick={() => setExpanded(!expanded)}
-        className={`w-full px-3 py-2 flex items-center justify-between text-left ${colors.header}`}
+        className="w-full px-3 py-2 flex items-center justify-between text-left bg-gray-100/50 dark:bg-gray-800/50"
       >
-        <span className="text-sm font-medium">Learning Standards ({standards.length})</span>
+        <span className="text-sm font-medium text-foreground">Learning Standards ({standards.length})</span>
         {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
       </button>
       {expanded && (
-        <div className={`p-2 space-y-1 ${colors.bg}`}>
+        <div className="p-2 space-y-1 bg-gray-50/50 dark:bg-gray-900/20">
           {standards.map((standard, index) => (
             <div key={index} className="flex items-start gap-2 group p-1.5 rounded hover:bg-white/50 dark:hover:bg-black/20">
               <Badge variant="outline" className="text-[10px] px-1 h-4 flex-shrink-0 font-mono">
@@ -105,14 +70,12 @@ export function SkillTabs({ formData }: SkillTabsProps) {
     const skill = formData.skills.find(s => s.skill === skillName);
     if (!skill) return null;
 
-    const colors = skillColors[skillName] || skillColors['Listening'];
-
     return (
       <div className="space-y-3">
         {skill.standards.map((standard, index) => (
-          <div key={index} className={`group p-3 rounded-lg border ${colors.border} ${colors.bg}`}>
+          <div key={index} className="group p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/20">
             <div className="flex items-start gap-2">
-              <Badge className={`text-xs px-1.5 h-5 flex-shrink-0 font-mono ${colors.header} ${colors.icon}`}>
+              <Badge className="text-xs px-1.5 h-5 flex-shrink-0 font-mono bg-gray-100 dark:bg-gray-800 text-foreground">
                 {standard.code}
               </Badge>
               <div className="flex-1">
@@ -130,7 +93,6 @@ export function SkillTabs({ formData }: SkillTabsProps) {
                     { code: `${standard.code}.2`, description: `Apply ${standard.description.toLowerCase()} in familiar contexts` },
                     { code: `${standard.code}.3`, description: `Use appropriate strategies for ${standard.description.toLowerCase()}` },
                   ]} 
-                  skillName={skillName}
                 />
               </div>
             </div>
@@ -202,44 +164,44 @@ export function SkillTabs({ formData }: SkillTabsProps) {
   return (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
       <TabsList className="grid grid-cols-4 lg:grid-cols-8 h-9 p-0.5">
-        <TabsTrigger value="listening" className="text-xs px-1 gap-1 data-[state=active]:bg-yellow-100 data-[state=active]:text-yellow-700">
+        <TabsTrigger value="listening" className="text-xs px-1 gap-1 data-[state=active]:bg-yellow-100 data-[state=active]:border-yellow-400 data-[state=active]:border">
           {skillIcons['Listening']}
           <span className="hidden sm:inline">Listen</span>
         </TabsTrigger>
-        <TabsTrigger value="speaking" className="text-xs px-1 gap-1 data-[state=active]:bg-red-100 data-[state=active]:text-red-700">
+        <TabsTrigger value="speaking" className="text-xs px-1 gap-1 data-[state=active]:bg-red-100 data-[state=active]:border-red-400 data-[state=active]:border">
           {skillIcons['Speaking']}
           <span className="hidden sm:inline">Speak</span>
         </TabsTrigger>
-        <TabsTrigger value="reading" className="text-xs px-1 gap-1 data-[state=active]:bg-green-100 data-[state=active]:text-green-700">
+        <TabsTrigger value="reading" className="text-xs px-1 gap-1 data-[state=active]:bg-green-100 data-[state=active]:border-green-400 data-[state=active]:border">
           {skillIcons['Reading']}
           <span className="hidden sm:inline">Read</span>
         </TabsTrigger>
-        <TabsTrigger value="writing" className="text-xs px-1 gap-1 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700">
+        <TabsTrigger value="writing" className="text-xs px-1 gap-1 data-[state=active]:bg-blue-100 data-[state=active]:border-blue-400 data-[state=active]:border">
           {skillIcons['Writing']}
           <span className="hidden sm:inline">Write</span>
         </TabsTrigger>
-        <TabsTrigger value="literature" className="text-xs px-1 gap-1 data-[state=active]:bg-purple-100 data-[state=active]:text-purple-700">
+        <TabsTrigger value="literature" className="text-xs px-1 gap-1 data-[state=active]:bg-purple-100 data-[state=active]:border-purple-400 data-[state=active]:border">
           {skillIcons['Literature in Action']}
           <span className="hidden sm:inline">Lit</span>
         </TabsTrigger>
-        <TabsTrigger value="grammar" className="text-xs px-1 gap-1">
+        <TabsTrigger value="grammar" className="text-xs px-1 gap-1 data-[state=active]:bg-amber-100 data-[state=active]:border-amber-700 data-[state=active]:border">
           <Languages className="h-4 w-4" />
           <span className="hidden sm:inline">Grammar</span>
         </TabsTrigger>
-        <TabsTrigger value="vocabulary" className="text-xs px-1 gap-1">
+        <TabsTrigger value="vocabulary" className="text-xs px-1 gap-1 data-[state=active]:bg-teal-100 data-[state=active]:border-teal-500 data-[state=active]:border">
           <Library className="h-4 w-4" />
           <span className="hidden sm:inline">Vocab</span>
         </TabsTrigger>
-        <TabsTrigger value="texttypes" className="text-xs px-1 gap-1">
+        <TabsTrigger value="texttypes" className="text-xs px-1 gap-1 data-[state=active]:bg-orange-100 data-[state=active]:border-orange-500 data-[state=active]:border">
           <FileText className="h-4 w-4" />
           <span className="hidden sm:inline">Texts</span>
         </TabsTrigger>
       </TabsList>
 
       <TabsContent value="listening" className="mt-2">
-        <Card className="border border-yellow-200 dark:border-yellow-800">
-          <CardHeader className="py-2 px-3 bg-yellow-50/50 dark:bg-yellow-900/10 flex flex-row items-center justify-between">
-            <span className="text-sm font-medium text-yellow-700">Listening Standards</span>
+        <Card className="border-yellow-400 dark:border-yellow-700">
+          <CardHeader className="py-2 px-3 bg-yellow-100/50 dark:bg-yellow-900/20 flex flex-row items-center justify-between">
+            <span className="text-sm font-medium text-foreground">Listening Standards</span>
             <CopyAllButton text={getAllStandardsText(formData, 'Listening')} label="Copy All" />
           </CardHeader>
           <CardContent className="p-2">
@@ -249,9 +211,9 @@ export function SkillTabs({ formData }: SkillTabsProps) {
       </TabsContent>
 
       <TabsContent value="speaking" className="mt-2">
-        <Card className="border border-red-200 dark:border-red-800">
-          <CardHeader className="py-2 px-3 bg-red-50/50 dark:bg-red-900/10 flex flex-row items-center justify-between">
-            <span className="text-sm font-medium text-red-700">Speaking Standards</span>
+        <Card className="border-red-400 dark:border-red-700">
+          <CardHeader className="py-2 px-3 bg-red-100/50 dark:bg-red-900/20 flex flex-row items-center justify-between">
+            <span className="text-sm font-medium text-foreground">Speaking Standards</span>
             <CopyAllButton text={getAllStandardsText(formData, 'Speaking')} label="Copy All" />
           </CardHeader>
           <CardContent className="p-2">
@@ -261,9 +223,9 @@ export function SkillTabs({ formData }: SkillTabsProps) {
       </TabsContent>
 
       <TabsContent value="reading" className="mt-2">
-        <Card className="border border-green-200 dark:border-green-800">
-          <CardHeader className="py-2 px-3 bg-green-50/50 dark:bg-green-900/10 flex flex-row items-center justify-between">
-            <span className="text-sm font-medium text-green-700">Reading Standards</span>
+        <Card className="border-green-400 dark:border-green-700">
+          <CardHeader className="py-2 px-3 bg-green-100/50 dark:bg-green-900/20 flex flex-row items-center justify-between">
+            <span className="text-sm font-medium text-foreground">Reading Standards</span>
             <CopyAllButton text={getAllStandardsText(formData, 'Reading')} label="Copy All" />
           </CardHeader>
           <CardContent className="p-2">
@@ -273,9 +235,9 @@ export function SkillTabs({ formData }: SkillTabsProps) {
       </TabsContent>
 
       <TabsContent value="writing" className="mt-2">
-        <Card className="border border-blue-200 dark:border-blue-800">
-          <CardHeader className="py-2 px-3 bg-blue-50/50 dark:bg-blue-900/10 flex flex-row items-center justify-between">
-            <span className="text-sm font-medium text-blue-700">Writing Standards</span>
+        <Card className="border-blue-400 dark:border-blue-700">
+          <CardHeader className="py-2 px-3 bg-blue-100/50 dark:bg-blue-900/20 flex flex-row items-center justify-between">
+            <span className="text-sm font-medium text-foreground">Writing Standards</span>
             <CopyAllButton text={getAllStandardsText(formData, 'Writing')} label="Copy All" />
           </CardHeader>
           <CardContent className="p-2">
@@ -285,9 +247,9 @@ export function SkillTabs({ formData }: SkillTabsProps) {
       </TabsContent>
 
       <TabsContent value="literature" className="mt-2">
-        <Card className="border border-purple-200 dark:border-purple-800">
-          <CardHeader className="py-2 px-3 bg-purple-50/50 dark:bg-purple-900/10 flex flex-row items-center justify-between">
-            <span className="text-sm font-medium text-purple-700">Literature in Action Standards</span>
+        <Card className="border-purple-400 dark:border-purple-700">
+          <CardHeader className="py-2 px-3 bg-purple-100/50 dark:bg-purple-900/20 flex flex-row items-center justify-between">
+            <span className="text-sm font-medium text-foreground">Literature in Action Standards</span>
             <CopyAllButton text={getAllStandardsText(formData, 'Literature in Action')} label="Copy All" />
           </CardHeader>
           <CardContent className="p-2">
@@ -297,9 +259,9 @@ export function SkillTabs({ formData }: SkillTabsProps) {
       </TabsContent>
 
       <TabsContent value="grammar" className="mt-2">
-        <Card className="border">
-          <CardHeader className="py-2 px-3 flex flex-row items-center justify-between">
-            <span className="text-sm font-medium">Grammar Topics</span>
+        <Card className="border-amber-700 dark:border-amber-600">
+          <CardHeader className="py-2 px-3 bg-amber-100/50 dark:bg-amber-900/20 flex flex-row items-center justify-between">
+            <span className="text-sm font-medium text-foreground">Grammar Topics</span>
             <CopyAllButton text={getAllGrammarText(formData)} label="Copy All Grammar" />
           </CardHeader>
           <CardContent className="p-2">
@@ -309,9 +271,9 @@ export function SkillTabs({ formData }: SkillTabsProps) {
       </TabsContent>
 
       <TabsContent value="vocabulary" className="mt-2">
-        <Card className="border">
-          <CardHeader className="py-2 px-3 flex flex-row items-center justify-between">
-            <span className="text-sm font-medium">Vocabulary by Category</span>
+        <Card className="border-teal-500 dark:border-teal-600">
+          <CardHeader className="py-2 px-3 bg-teal-100/50 dark:bg-teal-900/20 flex flex-row items-center justify-between">
+            <span className="text-sm font-medium text-foreground">Vocabulary by Category</span>
             <CopyAllButton text={getAllVocabularyText(formData)} label="Copy All Vocab" />
           </CardHeader>
           <CardContent className="p-2">
@@ -321,9 +283,9 @@ export function SkillTabs({ formData }: SkillTabsProps) {
       </TabsContent>
 
       <TabsContent value="texttypes" className="mt-2">
-        <Card className="border">
-          <CardHeader className="py-2 px-3 flex flex-row items-center justify-between">
-            <span className="text-sm font-medium">Suggested Text Types</span>
+        <Card className="border-orange-500 dark:border-orange-600">
+          <CardHeader className="py-2 px-3 bg-orange-100/50 dark:bg-orange-900/20 flex flex-row items-center justify-between">
+            <span className="text-sm font-medium text-foreground">Suggested Text Types</span>
             <CopyAllButton text={getAllTextTypesText(formData)} label="Copy All Types" />
           </CardHeader>
           <CardContent className="p-2">

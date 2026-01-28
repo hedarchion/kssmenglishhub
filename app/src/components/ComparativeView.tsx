@@ -7,6 +7,8 @@ import { CopyButton } from './CopyButton';
 import { ArrowRight, GitCompare, GraduationCap, Monitor, Tablet, Smartphone } from 'lucide-react';
 import type { FormData } from '@/data/curriculumData';
 
+
+
 interface ComparativeViewProps {
   formsData: FormData[];
 }
@@ -36,7 +38,7 @@ export function ComparativeView({ formsData }: ComparativeViewProps) {
     return (
       <div className={`grid ${getGridClasses()} gap-4`}>
         {formsData.map((form) => (
-          <Card key={form.form} className="border-l-4 border-l-primary flex flex-col">
+          <Card key={form.form} className="border-l-4 border-l-amber-700 flex flex-col">
             <CardHeader className="py-3 flex-shrink-0">
               <CardTitle className="text-base flex items-center gap-2">
                 <GraduationCap className="h-4 w-4" />
@@ -77,7 +79,7 @@ export function ComparativeView({ formsData }: ComparativeViewProps) {
     return (
       <div className={`grid ${getGridClasses()} gap-4`}>
         {formsData.map((form) => (
-          <Card key={form.form} className="border-l-4 border-l-primary flex flex-col">
+          <Card key={form.form} className="border-l-4 border-l-teal-500 flex flex-col">
             <CardHeader className="py-3 flex-shrink-0">
               <CardTitle className="text-base flex items-center gap-2">
                 <GraduationCap className="h-4 w-4" />
@@ -126,7 +128,7 @@ export function ComparativeView({ formsData }: ComparativeViewProps) {
     return (
       <div className={`grid ${getGridClasses()} gap-4`}>
         {formsData.map((form) => (
-          <Card key={form.form} className="border-l-4 border-l-primary flex flex-col">
+          <Card key={form.form} className="border-l-4 border-l-gray-400 flex flex-col">
             <CardHeader className="py-3 flex-shrink-0">
               <CardTitle className="text-base flex items-center gap-2">
                 <GraduationCap className="h-4 w-4" />
@@ -172,7 +174,7 @@ export function ComparativeView({ formsData }: ComparativeViewProps) {
     return (
       <div className={`grid ${getGridClasses()} gap-4`}>
         {formsData.map((form) => (
-          <Card key={form.form} className="border-l-4 border-l-primary flex flex-col">
+          <Card key={form.form} className="border-l-4 border-l-orange-500 flex flex-col">
             <CardHeader className="py-3 flex-shrink-0">
               <CardTitle className="text-base flex items-center gap-2">
                 <GraduationCap className="h-4 w-4" />

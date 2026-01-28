@@ -32,21 +32,13 @@ const skillIcons: Record<string, React.ReactNode> = {
 const mono = { bg: 'bg-gray-50 dark:bg-gray-900/20', border: 'border-gray-200 dark:border-gray-800', text: 'text-gray-800 dark:text-gray-200', light: 'bg-gray-100 dark:bg-gray-700/40' };
 
 function PerformanceLevel({ level, descriptor, note }: { level: number; descriptor: string; note: string }) {
-  // Non-collapsible: always display details (monochrome styling)
-  const levelColors: Record<number, string> = {
-    1: 'bg-gray-100 text-gray-700 border-gray-200',
-    2: 'bg-gray-100 text-gray-700 border-gray-200',
-    3: 'bg-gray-100 text-gray-700 border-gray-200',
-    4: 'bg-gray-100 text-gray-700 border-gray-200',
-    5: 'bg-gray-100 text-gray-700 border-gray-200',
-    6: 'bg-gray-100 text-gray-700 border-gray-200',
-  };
+  const levelStyle = 'bg-gray-100 text-gray-700 border-gray-200';
 
   return (
-    <div className={`border rounded-lg overflow-hidden ${levelColors[level]}`}>
+    <div className={`border rounded-lg overflow-hidden ${levelStyle}`}>
       <div className="px-3 py-2 flex items-center justify-between text-left">
         <div className="flex items-center gap-2">
-          <Badge className={`${levelColors[level]} border`}>Level {level}</Badge>
+          <Badge className={`${levelStyle} border`}>Level {level}</Badge>
           <span className="text-sm font-medium truncate max-w-[200px] md:max-w-md">
             {descriptor}
           </span>
@@ -68,15 +60,13 @@ function ContentStandardCard({
   description, 
   focus, 
   learningStandards,
-  showLearning,
-  skillName
+  showLearning
 }: { 
   code: string; 
   description: string; 
   focus: string; 
   learningStandards: { code: string; description: string }[];
   showLearning: boolean;
-  skillName: string;
 }) {
   const [expanded, setExpanded] = useState(true);
   const colors = mono;
@@ -185,7 +175,6 @@ function SkillView({
                 focus={cs.focus}
                 learningStandards={cs.learningStandards}
                 showLearning={showLearning}
-                skillName={skill.skill}
               />
             ))}
           </div>
@@ -460,7 +449,7 @@ export function StandardsView() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
             <div className="p-3 bg-background rounded-lg border border-gray-200">
               <div className="flex items-center gap-2 mb-2">
-                <Badge className="bg-blue-500">1</Badge>
+                <Badge className="bg-gray-500">1</Badge>
                 <span className="font-semibold">Content Standards</span>
               </div>
               <p className="text-xs text-muted-foreground">
