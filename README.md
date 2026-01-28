@@ -386,3 +386,4 @@ This project is for educational purposes. Curriculum content belongs to Kementer
 ---
 
 **Note**: This is an unofficial resource created to help educators access curriculum information more efficiently. Always refer to official documents from the Ministry of Education for authoritative information.
+# Deployment Trigger
