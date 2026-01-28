@@ -251,22 +251,25 @@ export function StandardsView() {
           {/* Forms Selection */}
           <div>
             <div className="text-sm font-medium mb-3">Select Form(s)</div>
-            <div className="grid grid-cols-5 gap-2">
-              {forms.map((form) => (
-                <button
-                  key={form}
-                  onClick={() => toggleForm(form)}
-                  className={`
-                    px-2 py-2.5 rounded-lg text-sm font-medium transition-all
-                    ${selectedForms.includes(form)
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted hover:bg-muted/80'
-                    }
-                  `}
-                >
-                  {form}
-                </button>
-              ))}
+            <div className="grid grid-cols-5 gap-2.5">
+              {forms.map((form) => {
+                const isSelected = selectedForms.includes(form);
+                return (
+                  <button
+                    key={form}
+                    onClick={() => toggleForm(form)}
+                    className={`
+                      px-2 py-3 rounded-lg text-base font-bold transition-all border-2
+                      ${isSelected
+                        ? 'bg-primary text-primary-foreground border-primary shadow-md ring-2 ring-primary/20'
+                        : 'bg-muted/50 border-muted-foreground/20 hover:bg-muted hover:border-muted-foreground/40 text-foreground'
+                      }
+                    `}
+                  >
+                    {form}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -280,23 +283,22 @@ export function StandardsView() {
                 <button onClick={clearAllSkills} className="text-xs text-primary hover:underline">Clear All</button>
               </div>
             </div>
-            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2.5">
               {skills.map((skill) => {
-                const colors = mono;
                 const isSelected = selectedSkills.includes(skill.skill);
                 return (
                   <button
                     key={skill.skill}
                     onClick={() => toggleSkill(skill.skill)}
                     className={`
-                      px-3 py-2.5 rounded-lg text-sm font-medium transition-all flex items-center justify-center sm:justify-start gap-2 border
+                      px-3 py-3 rounded-lg text-sm font-semibold transition-all flex items-center justify-center sm:justify-start gap-2 border-2
                       ${isSelected
-                        ? `${colors.bg} ${colors.border} ${colors.text}`
-                        : 'bg-muted border-transparent hover:bg-muted/80'
+                        ? 'bg-primary text-primary-foreground border-primary shadow-md ring-2 ring-primary/20'
+                        : 'bg-muted/50 border-muted-foreground/20 hover:bg-muted hover:border-muted-foreground/40 text-foreground'
                       }
                     `}
                   >
-                    <span className={isSelected ? colors.text : 'text-muted-foreground'}>{skillIcons[skill.skill]}</span>
+                    <span className={isSelected ? 'text-primary-foreground' : 'text-muted-foreground'}>{skillIcons[skill.skill]}</span>
                     <span className="text-xs sm:text-sm">{skill.skill}</span>
                   </button>
                 );
@@ -326,27 +328,30 @@ export function StandardsView() {
           {/* Compare Mode */}
           <div>
             <div className="text-sm font-medium mb-3">Compare By</div>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2.5">
               {[
                 { value: 'forms', label: 'Forms', icon: GitCompare },
                 { value: 'skills', label: 'Skills', icon: Layers },
                 { value: 'both', label: 'Both', icon: Filter },
-              ].map(({ value, label, icon: Icon }) => (
-                <button
-                  key={value}
-                  onClick={() => setCompareMode(value as 'forms' | 'skills' | 'both')}
-                  className={`
-                    px-2 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center justify-center gap-1.5
-                    ${compareMode === value
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted hover:bg-muted/80'
-                    }
-                  `}
-                >
-                  <Icon className="h-3.5 w-3.5" />
-                  {label}
-                </button>
-              ))}
+              ].map(({ value, label, icon: Icon }) => {
+                const isSelected = compareMode === value;
+                return (
+                  <button
+                    key={value}
+                    onClick={() => setCompareMode(value as 'forms' | 'skills' | 'both')}
+                    className={`
+                      px-2 py-3 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-1.5 border-2
+                      ${isSelected
+                        ? 'bg-primary text-primary-foreground border-primary shadow-md ring-2 ring-primary/20'
+                        : 'bg-muted/50 border-muted-foreground/20 hover:bg-muted hover:border-muted-foreground/40 text-foreground'
+                      }
+                    `}
+                  >
+                    <Icon className="h-3.5 w-3.5" />
+                    {label}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </CardContent>
