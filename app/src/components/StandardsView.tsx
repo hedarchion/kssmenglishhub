@@ -36,10 +36,10 @@ function PerformanceLevel({ level, descriptor, note }: { level: number; descript
 
   return (
     <div className={`border rounded-lg overflow-hidden ${levelStyle}`}>
-      <div className="px-3 py-2 flex items-center justify-between text-left">
+      <div className="px-3 py-2.5 flex items-center justify-between text-left">
         <div className="flex items-center gap-2">
           <Badge className={`${levelStyle} border`}>Level {level}</Badge>
-          <span className="text-sm font-medium truncate max-w-[200px] md:max-w-md">
+          <span className="text-sm font-medium truncate max-w-[180px] sm:max-w-md">
             {descriptor}
           </span>
         </div>
@@ -76,10 +76,10 @@ function ContentStandardCard({
 
   return (
     <div className={`border rounded-lg overflow-hidden ${colors.border}`}>
-      <div className={`${colors.bg} px-3 py-2`}>
+      <div className={`${colors.bg} px-3 py-3`}>
         <div className="flex items-start justify-between gap-2">
-          <div className="flex-1">
-            <div className="flex items-center gap-2">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
               <Badge variant="secondary" className={`font-mono ${colors.light} ${colors.text}`}>{code}</Badge>
               <span className="text-sm font-medium">{description}</span>
             </div>
@@ -89,19 +89,19 @@ function ContentStandardCard({
         </div>
       </div>
       {showLearning && (
-        <div className="p-2">
+        <div className="p-3">
           <button 
             onClick={() => setExpanded(!expanded)}
-            className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+            className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
           >
-            {expanded ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+            {expanded ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
             Learning Standards ({learningStandards.length})
           </button>
           {expanded && (
             <div className="mt-2 space-y-1">
               {learningStandards.map((ls) => (
-                <div key={ls.code} className="flex items-start gap-2 group p-1.5 rounded hover:bg-muted/50">
-                  <Badge variant="outline" className="text-[10px] px-1 h-4 flex-shrink-0 font-mono">
+                <div key={ls.code} className="flex items-start gap-2 group p-2 rounded hover:bg-muted/50">
+                  <Badge variant="outline" className="text-[10px] px-1.5 h-5 flex-shrink-0 font-mono">
                     {ls.code}
                   </Badge>
                   <span className="text-xs leading-relaxed flex-1">{ls.description}</span>
@@ -148,19 +148,19 @@ function SkillView({
 
   return (
     <Card className={`border ${colors.border}`}>
-      <CardHeader className={`py-3 ${colors.bg}`}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+      <CardHeader className={`py-3 px-4 ${colors.bg}`}>
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0">
             <div className={colors.text}>{skillIcons[skill.skill]}</div>
-            <CardTitle className="text-base">{skill.skill}</CardTitle>
+            <CardTitle className="text-sm sm:text-base truncate">{skill.skill}</CardTitle>
           </div>
-          <div className="flex gap-1">
+          <div className="flex gap-1 flex-shrink-0">
             {showContent && <CopyAllButton text={allContentText} label="Copy Content" />}
             {showPerformance && <CopyAllButton text={allPerformanceText} label="Copy Performance" />}
           </div>
         </div>
       </CardHeader>
-      <CardContent className="p-3 space-y-4">
+      <CardContent className="p-3 sm:p-4 space-y-4">
         {showContent && skill.contentStandards.length > 0 && (
           <div className="space-y-3">
             <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
@@ -181,7 +181,7 @@ function SkillView({
         )}
 
         {showPerformance && skill.performanceStandards.length > 0 && (
-          <div className="space-y-2">
+          <div className="space-y-3">
             <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
               <Award className="h-4 w-4" />
               Performance Standards
@@ -238,33 +238,33 @@ export function StandardsView() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* Filter Panel */}
       <Card className="border">
-        <CardHeader className="py-3">
+        <CardHeader className="py-4 px-4">
           <div className="flex items-center gap-2">
             <Filter className="h-4 w-4 text-primary" />
             <CardTitle className="text-sm">Filter & Compare Options</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="p-3 pt-0 space-y-4">
+        <CardContent className="p-4 pt-0 space-y-5">
           {/* Forms Selection */}
           <div>
-            <div className="text-sm font-medium mb-2">Select Form(s)</div>
-            <div className="flex flex-wrap gap-2">
+            <div className="text-sm font-medium mb-3">Select Form(s)</div>
+            <div className="grid grid-cols-5 gap-2">
               {forms.map((form) => (
                 <button
                   key={form}
                   onClick={() => toggleForm(form)}
                   className={`
-                    px-3 py-1.5 rounded-lg text-sm font-medium transition-all
+                    px-2 py-2.5 rounded-lg text-sm font-medium transition-all
                     ${selectedForms.includes(form)
                       ? 'bg-primary text-primary-foreground'
                       : 'bg-muted hover:bg-muted/80'
                     }
                   `}
                 >
-                  Form {form}
+                  {form}
                 </button>
               ))}
             </div>
@@ -272,7 +272,7 @@ export function StandardsView() {
 
           {/* Skills Selection */}
           <div>
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-3">
               <div className="text-sm font-medium">Select Skill(s)</div>
               <div className="flex gap-2">
                 <button onClick={selectAllSkills} className="text-xs text-primary hover:underline">Select All</button>
@@ -280,7 +280,7 @@ export function StandardsView() {
                 <button onClick={clearAllSkills} className="text-xs text-primary hover:underline">Clear All</button>
               </div>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
               {skills.map((skill) => {
                 const colors = mono;
                 const isSelected = selectedSkills.includes(skill.skill);
@@ -289,7 +289,7 @@ export function StandardsView() {
                     key={skill.skill}
                     onClick={() => toggleSkill(skill.skill)}
                     className={`
-                      px-3 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5 border
+                      px-3 py-2.5 rounded-lg text-sm font-medium transition-all flex items-center justify-center sm:justify-start gap-2 border
                       ${isSelected
                         ? `${colors.bg} ${colors.border} ${colors.text}`
                         : 'bg-muted border-transparent hover:bg-muted/80'
@@ -297,7 +297,7 @@ export function StandardsView() {
                     `}
                   >
                     <span className={isSelected ? colors.text : 'text-muted-foreground'}>{skillIcons[skill.skill]}</span>
-                    <span className="hidden sm:inline">{skill.skill}</span>
+                    <span className="text-xs sm:text-sm">{skill.skill}</span>
                   </button>
                 );
               })}
@@ -306,17 +306,17 @@ export function StandardsView() {
 
           {/* Aspects Selection */}
           <div>
-            <div className="text-sm font-medium mb-2">Show Aspects</div>
-            <div className="flex flex-wrap gap-4">
-              <label className="flex items-center gap-2 cursor-pointer">
+            <div className="text-sm font-medium mb-3">Show Aspects</div>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
+              <label className="flex items-center gap-2.5 cursor-pointer">
                 <Checkbox checked={showContent} onCheckedChange={(c) => setShowContent(c as boolean)} />
                 <span className="text-sm">Content Standards</span>
               </label>
-              <label className="flex items-center gap-2 cursor-pointer">
+              <label className="flex items-center gap-2.5 cursor-pointer">
                 <Checkbox checked={showLearning} onCheckedChange={(c) => setShowLearning(c as boolean)} />
                 <span className="text-sm">Learning Standards</span>
               </label>
-              <label className="flex items-center gap-2 cursor-pointer">
+              <label className="flex items-center gap-2.5 cursor-pointer">
                 <Checkbox checked={showPerformance} onCheckedChange={(c) => setShowPerformance(c as boolean)} />
                 <span className="text-sm">Performance Standards</span>
               </label>
@@ -325,18 +325,18 @@ export function StandardsView() {
 
           {/* Compare Mode */}
           <div>
-            <div className="text-sm font-medium mb-2">Compare By</div>
-            <div className="flex flex-wrap gap-2">
+            <div className="text-sm font-medium mb-3">Compare By</div>
+            <div className="grid grid-cols-3 gap-2">
               {[
-                { value: 'forms', label: 'Forms Only', icon: GitCompare },
-                { value: 'skills', label: 'Skills Only', icon: Layers },
-                { value: 'both', label: 'Forms & Skills', icon: Filter },
+                { value: 'forms', label: 'Forms', icon: GitCompare },
+                { value: 'skills', label: 'Skills', icon: Layers },
+                { value: 'both', label: 'Both', icon: Filter },
               ].map(({ value, label, icon: Icon }) => (
                 <button
                   key={value}
                   onClick={() => setCompareMode(value as 'forms' | 'skills' | 'both')}
                   className={`
-                    px-3 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center gap-1.5
+                    px-2 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center justify-center gap-1.5
                     ${compareMode === value
                       ? 'bg-primary text-primary-foreground'
                       : 'bg-muted hover:bg-muted/80'
@@ -354,7 +354,7 @@ export function StandardsView() {
 
       {/* Results Display */}
       <ScrollArea className="h-[600px]">
-        <div className="space-y-4">
+        <div className="space-y-5">
           {/* Compare by Forms */}
           {(compareMode === 'forms' || compareMode === 'both') && selectedForms.length > 1 && (
             <div className="space-y-4">
@@ -365,7 +365,7 @@ export function StandardsView() {
               <div className={`grid gap-4 ${selectedForms.length === 2 ? 'grid-cols-1 lg:grid-cols-2' : selectedForms.length === 3 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}>
                 {selectedForms.map((form) => (
                   <Card key={form} className="border">
-                    <CardHeader className="py-2 px-3 bg-muted/50">
+                    <CardHeader className="py-3 px-4 bg-muted/50">
                       <CardTitle className="text-sm">Form {form}</CardTitle>
                     </CardHeader>
                     <CardContent className="p-3 space-y-3">
@@ -373,8 +373,8 @@ export function StandardsView() {
                         const skill = skills.find(s => s.skill === skillName);
                         if (!skill) return null;
                         return (
-              <div key={skillName} className={`p-2 rounded border ${mono.border}`}>
-                <div className={`flex items-center gap-1.5 text-xs font-medium mb-1 ${mono.text}`}>
+                          <div key={skillName} className={`p-3 rounded border ${mono.border}`}>
+                            <div className={`flex items-center gap-2 text-xs font-medium mb-1 ${mono.text}`}>
                               {skillIcons[skillName]}
                               {skillName}
                             </div>
@@ -395,7 +395,7 @@ export function StandardsView() {
 
           {/* Compare by Skills */}
           {(compareMode === 'skills' || compareMode === 'both' || (compareMode === 'forms' && selectedForms.length === 1)) && (
-            <div className="space-y-4">
+            <div className="space-y-5">
               {compareMode === 'skills' && selectedSkills.length > 1 && (
                 <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                   <Layers className="h-4 w-4" />
@@ -404,7 +404,7 @@ export function StandardsView() {
               )}
               
               {selectedForms.map((form) => (
-                <div key={form} className="space-y-3">
+                <div key={form} className="space-y-4">
                   {selectedForms.length > 1 && (
                     <Badge variant="outline" className="text-sm">Form {form}</Badge>
                   )}
@@ -442,12 +442,12 @@ export function StandardsView() {
 
       {/* Standards Structure Info */}
       <Card className="border bg-muted/30">
-        <CardHeader className="py-3">
+        <CardHeader className="py-4 px-4">
           <CardTitle className="text-sm">Standards Structure</CardTitle>
         </CardHeader>
-        <CardContent className="p-3 pt-0">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
-            <div className="p-3 bg-background rounded-lg border border-gray-200">
+        <CardContent className="p-4 pt-0">
+          <div className="grid grid-cols-1 gap-3 text-sm">
+            <div className="p-4 bg-background rounded-lg border border-gray-200">
               <div className="flex items-center gap-2 mb-2">
                 <Badge className="bg-gray-500">1</Badge>
                 <span className="font-semibold">Content Standards</span>
@@ -456,7 +456,7 @@ export function StandardsView() {
                 Broad statements on what pupils should know, understand and be able to do by the end of Form 5.
               </p>
             </div>
-            <div className="p-3 bg-background rounded-lg border border-gray-200">
+            <div className="p-4 bg-background rounded-lg border border-gray-200">
               <div className="flex items-center gap-2 mb-2">
                 <Badge className="bg-gray-500">2</Badge>
                 <span className="font-semibold">Learning Standards</span>
@@ -465,7 +465,7 @@ export function StandardsView() {
                 Concise educational objectives that pupils are expected to master at each Form.
               </p>
             </div>
-            <div className="p-3 bg-background rounded-lg border border-gray-200">
+            <div className="p-4 bg-background rounded-lg border border-gray-200">
               <div className="flex items-center gap-2 mb-2">
                 <Badge className="bg-gray-500">3</Badge>
                 <span className="font-semibold">Performance Standards</span>

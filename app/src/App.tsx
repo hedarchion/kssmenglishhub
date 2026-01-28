@@ -150,18 +150,18 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-4">
+      <main className="container mx-auto px-4 py-5">
         {activeMainTab === 'browse' && (
-          <div className="space-y-4">
-            {/* Hero Section */}
-            <section className="text-center space-y-2 py-3">
-              <h2 className="text-2xl font-bold tracking-tight">KSSM English Language Curriculum</h2>
-              <p className="text-sm text-muted-foreground max-w-xl mx-auto">
+          <div className="space-y-5">
+            {/* Hero Section - Compact on mobile */}
+            <section className="text-center space-y-3 py-2">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight">KSSM English Language Curriculum</h2>
+              <p className="text-sm text-muted-foreground max-w-xl mx-auto px-2">
                 Learning standards, grammar, vocabulary for Forms 1-5. Select multiple forms to compare.
               </p>
-              <div className="flex flex-wrap justify-center gap-1.5">
+              <div className="flex flex-wrap justify-center gap-2">
                 {['A2 Mid', 'A2 High', 'B1 Low', 'B1 Mid', 'B1 High'].map((level, idx) => (
-                  <Badge key={idx} variant="secondary" className="text-xs">
+                  <Badge key={idx} variant="secondary" className="text-xs px-2.5 py-0.5">
                     {level}
                   </Badge>
                 ))}
@@ -176,7 +176,7 @@ function App() {
 
             {/* View Mode Toggle */}
             {selectedForms.length > 1 && (
-              <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <Badge variant="default" className="text-sm">
                     {selectedForms.length} Forms
@@ -189,15 +189,15 @@ function App() {
                   type="single" 
                   value={browseViewMode}
                   onValueChange={handleViewModeChange}
-                  className="border rounded-lg p-1"
+                  className="border rounded-lg p-1 w-full sm:w-auto"
                 >
-                  <ToggleGroupItem value="detailed" aria-label="Detailed" className="gap-1.5 text-sm">
+                  <ToggleGroupItem value="detailed" aria-label="Detailed" className="gap-1.5 text-sm flex-1 sm:flex-none">
                     <Layers className="h-4 w-4" />
-                    <span className="hidden sm:inline">Detailed</span>
+                    <span>Detailed</span>
                   </ToggleGroupItem>
-                  <ToggleGroupItem value="compare" aria-label="Compare" className="gap-1.5 text-sm">
+                  <ToggleGroupItem value="compare" aria-label="Compare" className="gap-1.5 text-sm flex-1 sm:flex-none">
                     <GitCompare className="h-4 w-4" />
-                    <span className="hidden sm:inline">Compare</span>
+                    <span>Compare</span>
                   </ToggleGroupItem>
                 </ToggleGroup>
               </div>
@@ -205,7 +205,7 @@ function App() {
 
             {/* Content Display */}
             {selectedForms.length > 0 ? (
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {browseViewMode === 'compare' && selectedForms.length > 1 ? (
                   <BrowseComparisonView formsData={getSelectedFormsData()} />
                 ) : (
@@ -214,9 +214,9 @@ function App() {
                     if (!formData) return null;
 
                     return (
-                      <div key={formNum} className="space-y-2">
+                      <div key={formNum} className="space-y-3">
                         <div className="flex items-center gap-2">
-                          <Badge className="text-base px-3 py-0.5">Form {formNum}</Badge>
+                          <Badge className="text-sm px-3 py-1">Form {formNum}</Badge>
                           <Badge variant="outline" className="text-sm">
                             {formData.cefrLevel}
                           </Badge>
@@ -239,9 +239,9 @@ function App() {
         )}
 
         {activeMainTab === 'standards' && (
-          <div className="space-y-4">
+          <div className="space-y-5">
             <Card>
-              <CardHeader className="py-3">
+              <CardHeader className="py-4 px-4">
                 <CardTitle className="flex items-center gap-2 text-base">
                   <BookText className="h-5 w-5 text-primary" />
                   Curriculum Standards
@@ -256,9 +256,9 @@ function App() {
         )}
 
         {activeMainTab === 'reference' && (
-          <div className="space-y-4">
+          <div className="space-y-5">
             <Card>
-              <CardHeader className="py-3">
+              <CardHeader className="py-4 px-4">
                 <CardTitle className="flex items-center gap-2 text-base">
                   <Lightbulb className="h-5 w-5 text-primary" />
                   Quick Reference
@@ -273,9 +273,9 @@ function App() {
         )}
 
         {activeMainTab === 'quiz' && (
-          <div className="space-y-4">
+          <div className="space-y-5">
             <Card>
-              <CardHeader className="py-3">
+              <CardHeader className="py-4 px-4">
                 <CardTitle className="flex items-center gap-2 text-base">
                   <Target className="h-5 w-5 text-primary" />
                   Curriculum Mastery Challenge
@@ -291,9 +291,9 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t bg-muted/30 mt-10">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-muted-foreground">
+      <footer className="border-t bg-muted/30 mt-12">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted-foreground">
             <div className="flex items-center gap-1.5">
               <GraduationCap className="h-4 w-4" />
               <span className="font-medium">KSSM English Hub</span>
@@ -305,7 +305,7 @@ function App() {
             </div>
             <div className="text-xs">Kementerian Pendidikan Malaysia</div>
           </div>
-          <div className="mt-3 pt-3 border-t text-center text-xs text-muted-foreground">
+          <div className="mt-4 pt-4 border-t text-center text-xs text-muted-foreground">
             Made by Ashrofu | Built using Kimi-K2.5
           </div>
         </div>

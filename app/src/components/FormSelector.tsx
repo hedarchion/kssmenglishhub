@@ -24,12 +24,12 @@ export function FormSelector({ selectedForms, onFormSelect, maxSelection = 5 }: 
 
   return (
     <Card className="border">
-      <CardContent className="p-3">
-        <div className="flex items-center gap-2 mb-2">
-          <GraduationCap className="h-4 w-4 text-primary" />
+      <CardContent className="p-4 sm:p-5">
+        <div className="flex items-center gap-2 mb-4">
+          <GraduationCap className="h-5 w-5 text-primary" />
           <span className="text-sm font-medium">Select Form(s)</span>
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-5 gap-2 sm:gap-3">
           {forms.map((form) => {
             const isSelected = selectedForms.includes(form);
             const canSelect = selectedForms.length < maxSelection || isSelected;
@@ -38,14 +38,16 @@ export function FormSelector({ selectedForms, onFormSelect, maxSelection = 5 }: 
               <Button
                 key={form}
                 variant={isSelected ? 'default' : 'outline'}
-                size="sm"
                 onClick={() => onFormSelect(form)}
                 disabled={!canSelect && !isSelected}
-                className={`h-12 px-3 transition-all ${isSelected ? 'shadow-sm' : ''}`}
+                className={`
+                  h-auto py-3 px-2 sm:px-3 transition-all min-h-[3.5rem]
+                  ${isSelected ? 'shadow-sm ring-2 ring-primary/20' : ''}
+                `}
               >
-                <div className="flex flex-col items-center leading-tight">
-                  <span className="font-semibold">Form {form}</span>
-                  <span className={`text-xs ${isSelected ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>
+                <div className="flex flex-col items-center leading-tight gap-0.5">
+                  <span className="font-semibold text-sm sm:text-base">{form}</span>
+                  <span className={`text-[10px] sm:text-xs ${isSelected ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>
                     {getCEFRLevel(form)}
                   </span>
                 </div>
@@ -53,7 +55,7 @@ export function FormSelector({ selectedForms, onFormSelect, maxSelection = 5 }: 
             );
           })}
         </div>
-        <p className="text-xs text-muted-foreground mt-2">
+        <p className="text-xs text-muted-foreground mt-4">
           {selectedForms.length === 0 ? 'Select at least one form' : `${selectedForms.length} form(s) selected`}
         </p>
       </CardContent>
